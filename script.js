@@ -97,6 +97,41 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// ===== Scroll Progress Bar =====
+const scrollProgress = document.querySelector('.scroll-progress');
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    scrollProgress.style.width = scrollPercent + '%';
+});
+
+// ===== Cursor Glow Effect =====
+const cursorGlow = document.querySelector('.cursor-glow');
+if (cursorGlow && window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top = e.clientY + 'px';
+        cursorGlow.classList.add('active');
+    });
+    
+    document.addEventListener('mouseleave', () => {
+        cursorGlow.classList.remove('active');
+    });
+}
+
+// ===== Section Header Reveal Animation =====
+const sectionHeaders = document.querySelectorAll('.section-header');
+const headerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.3 });
+
+sectionHeaders.forEach(header => headerObserver.observe(header));
+
 // ===== Active Navigation Link =====
 const sections = document.querySelectorAll('section[id]');
 
@@ -120,24 +155,81 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// ===== Typing Effect for Hero (Optional Enhancement) =====
+// ===== Typing Effect for Hero =====
 const heroText = document.querySelector('.hero h1 .gradient-text');
 if (heroText) {
-    const words = ['Digital Experiences', 'Custom Platforms', 'Business Growth', 'Online Success'];
+    const words = ['Digital Experiences', 'Custom Platforms', 'Online Success'];
     let wordIndex = 0;
     
-    function cycleWords() {
-        heroText.style.opacity = '0';
-        
-        setTimeout(() => {
-            heroText.textContent = words[wordIndex];
-            heroText.style.opacity = '1';
-            wordIndex = (wordIndex + 1) % words.length;
-        }, 300);
+    // Add cursor element
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    heroText.parentNode.insertBefore(cursor, heroText.nextSibling);
+    
+    function typeWord(word, callback) {
+        let i = 0;
+        heroText.textContent = '';
+        const typing = setInterval(() => {
+            if (i < word.length) {
+                heroText.textContent += word.charAt(i);
+                i++;
+            } else {
+                clearInterval(typing);
+                setTimeout(callback, 2000);
+            }
+        }, 100);
     }
     
-    // Cycle words every 3 seconds
-    setInterval(cycleWords, 3000);
+    function deleteWord(callback) {
+        const text = heroText.textContent;
+        let i = text.length;
+        const deleting = setInterval(() => {
+            if (i > 0) {
+                heroText.textContent = text.substring(0, i - 1);
+                i--;
+            } else {
+                clearInterval(deleting);
+                callback();
+            }
+        }, 50);
+    }
+    
+    function cycleWords() {
+        deleteWord(() => {
+            wordIndex = (wordIndex + 1) % words.length;
+            typeWord(words[wordIndex], cycleWords);
+        });
+    }
+    
+    // Start cycling after initial delay
+    setTimeout(cycleWords, 3000);
+}
+
+// ===== Parallax Effect for Floating Cards =====
+const floatingCards = document.querySelectorAll('.floating-card');
+if (window.innerWidth > 768) {
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        floatingCards.forEach((card, index) => {
+            const speed = 0.1 + (index * 0.05);
+            card.style.transform = `translateY(${scrollY * speed}px)`;
+        });
+    });
+}
+
+// ===== Number Counter Animation =====
+function animateCounter(element, target, suffix = '') {
+    let current = 0;
+    const increment = target / 50;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target + suffix;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current) + suffix;
+        }
+    }, 30);
 }
 
 // ===== Console Welcome Message =====

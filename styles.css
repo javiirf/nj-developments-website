@@ -1052,3 +1052,199 @@ p {
         flex-direction: column;
     }
 }
+/* ===== Scroll Progress Bar ===== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--gradient);
+    z-index: 9999;
+    width: 0%;
+    transition: width 0.1s ease-out;
+}
+
+/* ===== Animated Background ===== */
+.bg-gradient-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes bgPulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+/* ===== Cursor Glow Effect ===== */
+.cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.cursor-glow.active {
+    opacity: 1;
+}
+
+/* ===== Enhanced Card Hover Effects ===== */
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient);
+    opacity: 0;
+    border-radius: var(--radius-lg);
+    z-index: -1;
+    transition: var(--transition);
+}
+
+.service-card:hover::before {
+    opacity: 0.03;
+}
+
+/* ===== Glowing Button Effect ===== */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+/* ===== Portfolio Card Glow ===== */
+.portfolio-card {
+    position: relative;
+}
+
+.portfolio-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: var(--gradient);
+    border-radius: calc(var(--radius-lg) + 2px);
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.portfolio-card:hover::after {
+    opacity: 0.5;
+}
+
+/* ===== Animated Stats Counter ===== */
+.stat-number {
+    display: inline-block;
+}
+
+/* ===== Process Step Glow ===== */
+.step-number {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    animation: stepPulse 2s infinite;
+}
+
+@keyframes stepPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(99, 102, 241, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+/* ===== Floating Animation Enhancement ===== */
+.floating-card {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Logo Animation ===== */
+.logo-nj {
+    transition: var(--transition);
+}
+
+.logo:hover .logo-nj {
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* ===== Nav Link Glow on Hover ===== */
+.nav-links a:not(.btn-nav):hover {
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+/* ===== Contact Card Icon Animation ===== */
+.contact-icon {
+    transition: var(--transition);
+}
+
+.contact-card:hover .contact-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* ===== Section Reveal Animation ===== */
+.section-header {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section-header.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== Typing Cursor ===== */
+.typing-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: var(--primary);
+    margin-left: 4px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
